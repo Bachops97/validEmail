@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Email</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <input oninput="validEmail(this)" type="text" id="email" placeholder="Enter your email">
+
+    <div id="result"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function validEmail(elem){
+            //declare result
+            var result = true;
+            
+            //get value
+            var value = $(elem).val();
+
+            //if empty don't return anything
+            if(value === ''){
+                document.getElementById('result').innerHTML = '';
+                return;
+            }
+
+            //trim
+            value = value.trim();
+             
+            //It should contain one '@' character
+            var condition_1 = value.includes('@');
+            if(condition_1 === false){
+                result = false;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+
+            //check that the value only contains one @
+            var split_value = value.split("@");
+            condition_4 = split_value.length;
+
+            if(condition_4 != 2){
+                result = false;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+
+            //The '@' character should not be the first or last character of the string
+            var first_character = value.charAt(0);
+            var last_character = value.charAt(value.length-1);
+            if(first_character == '@' || last_character == '@'){
+                result = false;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+            
+            //It should contain at least one '.' character after the '@' character
+            //The '.' character should not be immediately preceded or followed by the '@' character
+            var after_at = split_value[1];
+            var condition_2 = value.includes('.');
+            var condition_3 = after_at.charAt(0);
+
+            if(condition_2 === false || condition_3 == '.'){
+                result = false;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+
+            //check if it ends with com
+            var condition_5 = after_at.split(".");
+            condition_5 = condition_5[1];
+
+            if(condition_5 != 'com'){
+                result = false;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+
+
+
+            //if all is good it should return the initial value of result which is true
+            document.getElementById('result').innerHTML = result;
+            return;
+        }
+    </script>
+</body>
+</html>
